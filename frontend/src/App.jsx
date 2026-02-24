@@ -6,12 +6,12 @@ function App(){
 
   useEffect(()=>{loadstudents();},[]);
   function loadstudents(){
-    fetch("http://localhost:5255/api/students").then(res=>res.json()).then(data=>setstudents(data));
+    fetch("http://localhost:5071/api/students").then(res=>res.json()).then(data=>setstudents(data));
   }
 
   function addstudent(){
     if(name==="" || age==="") return;
-    fetch("http://localhost:5255/api/students",{
+    fetch("http://localhost:5071/api/students",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({name,age:Number(age)})
@@ -23,9 +23,22 @@ function App(){
   }
 
   function deletestudent(id){
-    fetch(`http://localhost:5255/api/students/${id}`,{
+    fetch(`http://localhost:5071/api/students/${id}`,{
       method:"DELETE"
     }).then(()=>loadstudents());
+  }
+  
+  function updatestudent(id){
+    if(name ==="" ||age==="") return;
+    fetch(`http://localhost:5071/api/students/${id}`,{
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({name,age:Number(age)})
+    }).then(()=>{
+      setname("");
+      setage("");
+      loadstudents();
+    });
   }
 
   return (
@@ -38,6 +51,7 @@ function App(){
         <div key={student.id}>
           {student.name}  {student.age}
           <button onClick={()=>deletestudent(student.id)}> delete</button>
+          <button onClick={()=>updatestudent(student.id)}>update</button>
         </div>
       ))}
     </div>
