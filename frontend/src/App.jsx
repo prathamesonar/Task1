@@ -4,7 +4,7 @@ function App(){
   const [name, setname] =useState("");
   const [age, setage] =useState("");
 
-  useEffect(()=>{loadStudents();},[]);
+  useEffect(()=>{loadstudents();},[]);
   function loadstudents(){
     fetch("http://localhost:5255/api/students").then(res=>res.json()).then(data=>setstudents(data));
   }
@@ -22,7 +22,7 @@ function App(){
     });
   }
 
-  function deleteStudent(id){
+  function deletestudent(id){
     fetch(`http://localhost:5255/api/students/${id}`,{
       method:"DELETE"
     }).then(()=>loadstudents());
@@ -37,7 +37,7 @@ function App(){
       {students.map(student=>(
         <div key={student.id}>
           {student.name}  {student.age}
-          <button onClick={()=>deleteStudent(student.id)}> delete</button>
+          <button onClick={()=>deletestudent(student.id)}> delete</button>
         </div>
       ))}
     </div>
