@@ -35,5 +35,14 @@ namespace StudentApi.Controllers
 			students.Remove(student);
 			return Ok();
 		}
+
+		[HttpPut("{id}")]
+        public IActionResult UpdateStudent(int id,Student updatedStudent){
+            var student =students.FirstOrDefault(s=>s.Id==id);
+            if (student ==null) return NotFound();
+            student.Name =updatedStudent.Name;
+            student.Age =updatedStudent.Age;
+            return Ok(student);
+        }
 	}
 }
