@@ -23,6 +23,8 @@ namespace StudentApi.Controllers
 		{
 			student.Id = students.Count == 0 ? 1 : students.Max(s => s.Id) + 1;
 			students.Add(student);
+			student.CreatedOn = DateTime.UtcNow;
+            student.ModifiedOn = DateTime.UtcNow;
 			return student;
 		}
 
@@ -42,6 +44,7 @@ namespace StudentApi.Controllers
             if (student ==null) return NotFound();
             student.Name =updatedStudent.Name;
             student.Age =updatedStudent.Age;
+			student.ModifiedOn = DateTime.UtcNow;
             return Ok(student);
         }
 	}
